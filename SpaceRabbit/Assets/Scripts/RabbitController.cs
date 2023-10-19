@@ -25,19 +25,21 @@ public class RabbitController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        // prevent rabbit from moving out of horizontal bounds
         Vector3 viewPos = rabbit.position;
         viewPos.x = Mathf.Clamp(viewPos.x, screenBounds.x * -1 - objectWidth, screenBounds.x + objectWidth);
         rabbit.position = viewPos;
 
-        if ((Input.GetKey("w") || Input.GetKey(KeyCode.Space)) && bGrounded)
+        // movement keys
+        if ((Input.GetKey("w") || Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.UpArrow)) && bGrounded)
         {
             rabbit.velocity = transform.up * jump;
         }
-        if (Input.GetKey("a"))
+        if (Input.GetKey("a") || Input.GetKey(KeyCode.LeftArrow))
         {
             rabbit.velocity += new Vector2(-speed, 0);
         }
-        if (Input.GetKey("d"))
+        if (Input.GetKey("d") || Input.GetKey(KeyCode.RightArrow))
         {
             rabbit.velocity += new Vector2(speed, 0);
         }
