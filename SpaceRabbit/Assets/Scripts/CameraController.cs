@@ -5,17 +5,33 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     public Transform target;
+    public float damping = 0.3f;
+
+    float offsetZ;
+    Vector3 lastTargetPosition;
+    Vector3 currentVelocity;
+    Vector3 lookAheadPos;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        lastTargetPosition = target.position;
+        offsetZ = (transform.position - target.position).z;
+        transform.parent = null;
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
-        Vector3 v = new Vector3(0, target.position.y, 0);
-        transform.position = v + Vector3.back * 10;
+        float yMoveDelta = (target.position - lastTargetPosition).y;
+
+        Vector3 aheadTargetPos = new Vector3(transform.position.x, target.position.y + 2.5f, transform.position.z) + Vector3.forward * offsetZ;
+        Vector3 newPos = Vector3.SmoothDamp(transform.position, aheadTargetPos, ref currentVelocity, damping);
+
+        transform.position = newPos;
+        lastTargetPosition = target.position;
+
+        //Vector3 v = new Vector3(0, target.position.y, 0);
+        //transform.position = v + Vector3.back * 10;
     }
 }
