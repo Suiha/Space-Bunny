@@ -16,7 +16,7 @@ public class CameraController : MonoBehaviour
     void Start()
     {
         lastTargetPosition = target.position;
-        offsetZ = (transform.position - target.position).z;
+        //offsetZ = (transform.position - target.position).z;
         transform.parent = null;
     }
 
@@ -25,7 +25,7 @@ public class CameraController : MonoBehaviour
     {
         float yMoveDelta = (target.position - lastTargetPosition).y;
 
-        Vector3 aheadTargetPos = new Vector3(transform.position.x, target.position.y + 2.5f, transform.position.z) + Vector3.forward * offsetZ;
+        Vector3 aheadTargetPos = new Vector3(transform.position.x, target.position.y + 2.5f, transform.position.z);// + Vector3.forward;// * offsetZ;
         Vector3 newPos = Vector3.SmoothDamp(transform.position, aheadTargetPos, ref currentVelocity, damping);
 
         transform.position = newPos;
