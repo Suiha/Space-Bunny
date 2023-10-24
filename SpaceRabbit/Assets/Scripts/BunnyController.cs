@@ -38,17 +38,25 @@ public class BunnyController : MonoBehaviour
         // jumping
         if ((Input.GetKey("w") || Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.UpArrow)) && bGrounded)
         {
-            bunny.velocity = new Vector2 (bunny.velocity.x, (transform.up * jumpPower).y);
+            bunny.velocity = new Vector2 (bunny.velocity.x, jumpPower);
+            anim.SetBool("jumping", true);
         }
         if (Input.GetKey("a") || Input.GetKey(KeyCode.LeftArrow))
         {
             transform.localScale = new Vector3(-1, 1, 1);
             bunny.velocity = new Vector2(-speed, bunny.velocity.y);
+            if (!anim.GetBool("jumping")) anim.SetBool("moving", true);
         }
-        if (Input.GetKey("d") || Input.GetKey(KeyCode.RightArrow))
+        else if (Input.GetKey("d") || Input.GetKey(KeyCode.RightArrow))
         {
             transform.localScale = new Vector3(1, 1, 1);
             bunny.velocity = new Vector2(speed, bunny.velocity.y);
+            if (!anim.GetBool("jumping")) anim.SetBool("moving", true);
+        }
+
+        if (bunny.velocity.x == 0)
+        {
+            anim.SetBool("moving", false);
         }
 
         // keep bunny within screen bounds
@@ -56,6 +64,7 @@ public class BunnyController : MonoBehaviour
         {
             bunny.velocity = new Vector2(0, 0);
         }
+
     }
 
     // on collision = rabbit on ground
@@ -69,6 +78,5 @@ public class BunnyController : MonoBehaviour
     void OnCollisionExit2D(Collision2D col)
     {
         bGrounded = false;
-        anim.SetBool("jumping", true);
     }
 }
