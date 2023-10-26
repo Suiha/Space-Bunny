@@ -24,18 +24,12 @@ public class HawkController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // prevent hawk from flying off screen
-        Vector3 newPos = hawk.position;
-        newPos.x = Mathf.Clamp(newPos.x, -screenBounds.x + objectWidth, screenBounds.x - objectWidth);
-        hawk.position = newPos;
-
         // if hawk hits bounds, turn around
         if (hawk.position.x <= -screenBounds.x + objectWidth || hawk.position.x >= screenBounds.x - objectWidth)
         {
             direction *= -1;
             hawk.velocity = new Vector2(direction * speed, 0);
         }
-
     }
 
     // hawk turns when it hits a platform
