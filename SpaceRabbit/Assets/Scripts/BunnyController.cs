@@ -72,6 +72,9 @@ public class BunnyController : MonoBehaviour
         {
             bGrounded = true;
             anim.SetBool("jumping", false);
+        } else if (obj.gameObject.tag == "enemy")
+        {
+            TakeDamage(1);
         }
     }
 
