@@ -30,8 +30,5 @@ public class CameraController : MonoBehaviour
 
         transform.position = newPos;
         lastTargetPosition = target.position;
-
-        //Vector3 v = new Vector3(0, target.position.y, 0);
-        //transform.position = v + Vector3.back * 10;
     }
 }

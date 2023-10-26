@@ -34,14 +34,14 @@ public class BunnyController : MonoBehaviour
     void FixedUpdate()
     {
         // prevent rabbit from moving out of horizontal bounds
-        Vector3 viewPos = bunny.position;
-        viewPos.x = Mathf.Clamp(viewPos.x, -screenBounds.x + objectWidth, screenBounds.x - objectWidth);
-        bunny.position = viewPos;
+        Vector3 newPos = bunny.position;
+        newPos.x = Mathf.Clamp(newPos.x, -screenBounds.x + objectWidth, screenBounds.x - objectWidth);
+        bunny.position = newPos;
 
         // jumping
         if ((Input.GetKey("w") || Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.UpArrow)) && bGrounded)
         {
-            bunny.velocity = new Vector2 (bunny.velocity.x, jumpPower);
+            bunny.velocity = new Vector2(bunny.velocity.x, jumpPower);
             anim.SetBool("jumping", true);
         }
         if (Input.GetKey("a") || Input.GetKey(KeyCode.LeftArrow))
@@ -57,16 +57,11 @@ public class BunnyController : MonoBehaviour
             if (!anim.GetBool("jumping")) anim.SetBool("moving", true);
         }
 
+        // stop moving animation
         if (bunny.velocity.x == 0)
         {
             anim.SetBool("moving", false);
         }
-
-        // keep bunny within screen bounds
-        /*if (bunny.position.x <= (-Screen.width / 2) || bunny.position.x >= (Screen.width / 2))
-        {
-            bunny.velocity = new Vector2(0, 0);
-        }*/
 
     }
 
