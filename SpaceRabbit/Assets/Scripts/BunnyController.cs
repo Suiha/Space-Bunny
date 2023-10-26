@@ -7,9 +7,9 @@ public class BunnyController : MonoBehaviour
     Rigidbody2D bunny;
     private Animator anim;
 
+    public int maxHealth = 3;
+    public int currentHealth;
     public float jumpPower, speed;
-    Vector2 force = new Vector2(0, 0);
-    Vector2 rAcceleration = new Vector2(0, 0);
 
     private Vector2 screenBounds;
     private float objectWidth;
@@ -21,6 +21,8 @@ public class BunnyController : MonoBehaviour
     {
         bunny = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+
+        currentHealth = maxHealth;
 
         screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0));
         objectWidth = bunny.GetComponent<SpriteRenderer>().bounds.size.x / 16;
@@ -78,5 +80,10 @@ public class BunnyController : MonoBehaviour
     void OnCollisionExit2D(Collision2D col)
     {
         bGrounded = false;
+    }
+
+    void TakeDamage(int dmg)
+    {
+        currentHealth -= dmg;
     }
 }
