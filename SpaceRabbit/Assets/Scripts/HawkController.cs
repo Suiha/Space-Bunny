@@ -34,10 +34,10 @@ public class HawkController : MonoBehaviour
         // change sprite direction based on direction
         if (direction < 0)
         {
-            transform.localScale = new Vector3(-1, 1, 1);
+            transform.localScale = new Vector3(1, 1, 1);
         } else
         {
-            transform.localScale = new Vector3(1, 1, 1);
+            transform.localScale = new Vector3(-1, 1, 1);
         }
 
     }
