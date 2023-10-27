@@ -30,17 +30,26 @@ public class HawkController : MonoBehaviour
             direction *= -1;
             hawk.velocity = new Vector2(direction * speed, 0);
         }
+
+        // change sprite direction based on direction
+        if (direction < 0)
+        {
+            transform.localScale = new Vector3(-1, 1, 1);
+        } else
+        {
+            transform.localScale = new Vector3(1, 1, 1);
+        }
+
     }
 
     // hawk turns when it hits a platform
     void OnCollisionEnter2D(Collision2D obj)
     {
-        //transform.localScale = new Vector3(-1, 1, 1);
-        
         if (obj.gameObject.tag == "platform")
         {
             direction *= -1;
-            hawk.velocity = new Vector2(direction * speed, 0);
         }
+
+        hawk.velocity = new Vector2(direction * speed, 0);
     }
 }

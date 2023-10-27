@@ -8,7 +8,7 @@ public class BunnyController : MonoBehaviour
     Rigidbody2D bunny;
     private Animator anim;
 
-    public int maxHealth = 3;
+    public int maxHealth = 10;
     public int currentHealth;
     public float jumpPower, speed;
 
