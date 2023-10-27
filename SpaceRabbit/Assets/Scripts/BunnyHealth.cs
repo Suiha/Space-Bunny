@@ -11,8 +11,6 @@ public class BunnyHealth : MonoBehaviour
     public GameObject bunny;
     private BunnyController bunnyController;
 
-    //public Slider slider;
-
     // Start is called before the first frame update
     void Start()
     {

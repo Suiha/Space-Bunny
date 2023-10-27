@@ -89,7 +89,7 @@ public class BunnyController : MonoBehaviour
         currentHealth -= dmg;
         if (currentHealth <= 0)
         {
-            SceneManager.LoadScene("Menu");
+            SceneManager.LoadScene("GameOver");
         }
     }
 }
