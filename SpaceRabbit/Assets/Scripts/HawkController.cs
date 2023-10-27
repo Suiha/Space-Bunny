@@ -28,8 +28,8 @@ public class HawkController : MonoBehaviour
         if (hawk.position.x <= -screenBounds.x + objectWidth || hawk.position.x >= screenBounds.x - objectWidth)
         {
             direction *= -1;
-            hawk.velocity = new Vector2(direction * speed, 0);
         }
+        hawk.velocity = new Vector2(direction * speed, 0);
 
         // change sprite direction based on direction
         if (direction < 0)
