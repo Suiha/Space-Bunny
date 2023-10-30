@@ -24,11 +24,7 @@ public class HawkController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // if hawk hits bounds, turn around
-        if (hawk.position.x <= -screenBounds.x + objectWidth || hawk.position.x >= screenBounds.x - objectWidth)
-        {
-            direction *= -1;
-        }
+        // hawk speed is constant
         hawk.velocity = new Vector2(direction * speed, 0);
 
         // change sprite direction based on direction
@@ -45,7 +41,7 @@ public class HawkController : MonoBehaviour
     // hawk turns when it hits a platform
     void OnCollisionEnter2D(Collision2D obj)
     {
-        if (obj.gameObject.tag == "platform")
+        if (obj.gameObject.tag == "platform" || obj.gameObject.tag == "screen_bounds")
         {
             direction *= -1;
         }
