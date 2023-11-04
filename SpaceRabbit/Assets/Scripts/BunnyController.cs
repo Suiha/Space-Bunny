@@ -15,6 +15,7 @@ public class BunnyController : MonoBehaviour
     private Vector2 screenBounds;
     private float objectWidth;
 
+    private GameObject platform;
     private bool bGrounded;
 
     // Start is called before the first frame update
@@ -70,8 +71,15 @@ public class BunnyController : MonoBehaviour
         // bunny can only jump if in contact with a platform
         if (obj.gameObject.tag == "platform")
         {
-            bGrounded = true;
-            anim.SetBool("jumping", false);
+            platform = obj.gameObject;
+            float platWidth = platform.GetComponent<SpriteRenderer>().bounds.size.x / 2;
+            float platHeight = platform.GetComponent<SpriteRenderer>().bounds.size.y / 2;
+            // check if bunny is above platform and not on the sides
+            if (bunny.position.y > platform.transform.position.y + platHeight && (bunny.position.x > platform.transform.position.x - platWidth && bunny.position.x < platform.transform.position.x + platWidth))
+            {
+                bGrounded = true;
+                anim.SetBool("jumping", false);
+            }
         } else if (obj.gameObject.tag == "enemy")
         {
             TakeDamage(1);
