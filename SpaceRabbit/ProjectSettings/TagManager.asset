@@ -8,6 +8,8 @@ TagManager:
   - enemy
   - player
   - screen_bounds
+  - carrot
+  - health
   layers:
   - Default
   - TransparentFX
@@ -19,7 +21,7 @@ TagManager:
   - Player
   - Platforms
   - Enemies
-  - 
+  - Items
   - 
   - 
   - 
@@ -53,6 +55,9 @@ TagManager:
     locked: 0
   - name: Platforms
     uniqueID: 2531473739
+    locked: 0
+  - name: Items
+    uniqueID: 1942673193
     locked: 0
   - name: Enemies
     uniqueID: 1364260523

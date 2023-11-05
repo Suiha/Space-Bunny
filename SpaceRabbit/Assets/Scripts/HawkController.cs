@@ -45,7 +45,5 @@ public class HawkController : MonoBehaviour
         {
             direction *= -1;
         }
-
-        hawk.velocity = new Vector2(direction * speed, 0);
     }
 }

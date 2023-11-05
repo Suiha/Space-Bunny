@@ -64,6 +64,7 @@ public class BunnyController : MonoBehaviour
         currentHealth = PlayerPrefs.GetInt("bunnyHealth");
     }
 
+    // collision effect depends on object type
     void OnCollisionEnter2D(Collision2D obj)
     {
         // bunny can only jump if in contact with a platform
@@ -83,11 +84,6 @@ public class BunnyController : MonoBehaviour
         else if (obj.gameObject.tag == "enemy")
         {
             TakeDamage(1);
-        } 
-        // bunny heals from health item
-        else if (obj.gameObject.tag == "health")
-        {
-            Heal(1);
         }
     }
 
@@ -97,16 +93,9 @@ public class BunnyController : MonoBehaviour
         bGrounded = false;
     }
 
-    void Heal(int h)
-    {
-        if (currentHealth < maxHealth)
-        {
-            PlayerPrefs.SetInt("bunnyHealth", currentHealth + h);
-        }
-    }
-
     void TakeDamage(int dmg)
     {
+        currentHealth = PlayerPrefs.GetInt("bunnyHealth");
         PlayerPrefs.SetInt("bunnyHealth", currentHealth - dmg);
         if (PlayerPrefs.GetInt("bunnyHealth") <= 0)
         {
