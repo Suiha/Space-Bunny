@@ -8,21 +8,17 @@ public class HawkController : MonoBehaviour
     public float speed;
     private int direction = 1;
 
-    private Vector2 screenBounds;
-    private float objectWidth;
+    public int dmg = 1;
 
     // Start is called before the first frame update
     void Start()
     {
         hawk = GetComponent<Rigidbody2D>();
         hawk.velocity = new Vector2(speed, 0);
-
-        screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0));
-        objectWidth = hawk.GetComponent<SpriteRenderer>().bounds.size.x / 2;
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         // hawk speed is constant
         hawk.velocity = new Vector2(direction * speed, 0);
@@ -38,12 +34,19 @@ public class HawkController : MonoBehaviour
 
     }
 
-    // hawk turns when it hits a platform
-    void OnCollisionEnter2D(Collision2D obj)
+    // hawk collision behavior
+    void OnTriggerEnter2D(Collider2D obj)
     {
+        // hawk turns when it hits a platform
         if (obj.gameObject.tag == "platform" || obj.gameObject.tag == "screen_bounds")
         {
             direction *= -1;
+        }
+        // bunny takes damage when it hits a hawk
+        else if (obj.CompareTag("player"))
+        {
+            int health = PlayerPrefs.GetInt("bunnyHealth");
+            PlayerPrefs.SetInt("bunnyHealth", health - dmg);
         }
     }
 }

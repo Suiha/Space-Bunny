@@ -28,9 +28,6 @@ public class BunnyController : MonoBehaviour
 
         currentHealth = maxHealth;
         PlayerPrefs.SetInt("bunnyHealth", currentHealth);
-
-        //screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0));
-        //objectWidth = bunny.GetComponent<SpriteRenderer>().bounds.size.x / 2;
     }
 
 
