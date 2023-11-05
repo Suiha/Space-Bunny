@@ -5,6 +5,9 @@ This bunny has one dream: to reach space! Navigate your way through the clouds w
 
 ## Team
 Producer: Veronica Hu
+
 Designer: Joshua Navarro
+
 Artists: Joshua Navarro, Gisselle Parayno
+
 Programmer: Veronica Hu
