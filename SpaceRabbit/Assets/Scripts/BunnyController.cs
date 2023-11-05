@@ -8,6 +8,7 @@ public class BunnyController : MonoBehaviour
     Rigidbody2D bunny;
     private Animator anim;
 
+    // bunny traits
     public int maxHealth = 10;
     private int currentHealth;
     public float jumpPower, speed;
@@ -15,6 +16,7 @@ public class BunnyController : MonoBehaviour
     private Vector2 screenBounds;
     private float objectWidth;
 
+    // grounded check
     private GameObject platform;
     private bool bGrounded;
 
@@ -27,17 +29,25 @@ public class BunnyController : MonoBehaviour
         currentHealth = maxHealth;
         PlayerPrefs.SetInt("bunnyHealth", currentHealth);
 
-        screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0));
-        objectWidth = bunny.GetComponent<SpriteRenderer>().bounds.size.x / 2;
+        //screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0));
+        //objectWidth = bunny.GetComponent<SpriteRenderer>().bounds.size.x / 2;
     }
 
 
     void FixedUpdate()
     {
-        // jumping
+        // movement
         if ((Input.GetKey("w") || Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.UpArrow)) && bGrounded)
         {
-            bunny.velocity = new Vector2(bunny.velocity.x, jumpPower);
+            // carrot buff increases jump power
+            if (PlayerPrefs.GetInt("carrotBuff") != 0)
+            {
+                bunny.velocity = new Vector2(bunny.velocity.x, jumpPower * PlayerPrefs.GetInt("carrotBuff"));
+                PlayerPrefs.SetInt("carrotBuff", 0);
+            } else
+            {
+                bunny.velocity = new Vector2(bunny.velocity.x, jumpPower);
+            }
             anim.SetBool("jumping", true);
         }
         if (Input.GetKey("a") || Input.GetKey(KeyCode.LeftArrow))
@@ -53,7 +63,7 @@ public class BunnyController : MonoBehaviour
             if (bGrounded) anim.SetBool("moving", true);
         }
 
-        // stop moving animation
+        // no x movement, stop moving animation
         if (bunny.velocity.x == 0)
         {
             anim.SetBool("moving", false);
