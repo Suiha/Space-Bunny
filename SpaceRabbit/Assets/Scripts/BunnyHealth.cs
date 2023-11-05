@@ -6,7 +6,6 @@ using TMPro;
 public class BunnyHealth : MonoBehaviour
 {
     private TMP_Text healthCounter;
-    string health = "Health: ";
 
     public GameObject bunny;
     private BunnyController bunnyController;
@@ -17,13 +16,13 @@ public class BunnyHealth : MonoBehaviour
         healthCounter = GetComponent<TMP_Text>();
 
         bunnyController = bunny.GetComponent<BunnyController>();
-        healthCounter.text = health + bunnyController.maxHealth.ToString();
+        healthCounter.text = bunnyController.maxHealth.ToString();
     }
 
     // Update is called once per frame
     void Update()
     {
-        healthCounter.text = health + bunnyController.currentHealth;
+        healthCounter.text = bunnyController.currentHealth.ToString();
     }
 
 }
