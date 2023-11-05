@@ -9,7 +9,7 @@ public class BunnyController : MonoBehaviour
     private Animator anim;
 
     public int maxHealth = 10;
-    public int currentHealth;
+    private int currentHealth;
     public float jumpPower, speed;
 
     private Vector2 screenBounds;
@@ -25,20 +25,15 @@ public class BunnyController : MonoBehaviour
         anim = GetComponent<Animator>();
 
         currentHealth = maxHealth;
+        PlayerPrefs.SetInt("bunnyHealth", currentHealth);
 
         screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0));
         objectWidth = bunny.GetComponent<SpriteRenderer>().bounds.size.x / 2;
     }
 
 
-    // Update is called once per frame
     void FixedUpdate()
     {
-        // prevent rabbit from moving out of horizontal bounds
-        Vector3 newPos = bunny.position;
-        newPos.x = Mathf.Clamp(newPos.x, -screenBounds.x + objectWidth, screenBounds.x - objectWidth);
-        bunny.position = newPos;
-
         // jumping
         if ((Input.GetKey("w") || Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.UpArrow)) && bGrounded)
         {
@@ -49,13 +44,13 @@ public class BunnyController : MonoBehaviour
         {
             transform.localScale = new Vector3(-1, 1, 1);
             bunny.velocity = new Vector2(-speed, bunny.velocity.y);
-            if (!anim.GetBool("jumping")) anim.SetBool("moving", true);
+            if (bGrounded) anim.SetBool("moving", true);
         }
         else if (Input.GetKey("d") || Input.GetKey(KeyCode.RightArrow))
         {
             transform.localScale = new Vector3(1, 1, 1);
             bunny.velocity = new Vector2(speed, bunny.velocity.y);
-            if (!anim.GetBool("jumping")) anim.SetBool("moving", true);
+            if (bGrounded) anim.SetBool("moving", true);
         }
 
         // stop moving animation
@@ -64,6 +59,9 @@ public class BunnyController : MonoBehaviour
             anim.SetBool("moving", false);
         }
 
+
+        // keep track of health from player prefs
+        currentHealth = PlayerPrefs.GetInt("bunnyHealth");
     }
 
     void OnCollisionEnter2D(Collision2D obj)
@@ -80,10 +78,14 @@ public class BunnyController : MonoBehaviour
                 bGrounded = true;
                 anim.SetBool("jumping", false);
             }
-        } else if (obj.gameObject.tag == "enemy")
+        }
+        // bunny takes damage from enemies
+        else if (obj.gameObject.tag == "enemy")
         {
             TakeDamage(1);
-        } else if (obj.gameObject.tag == "health")
+        } 
+        // bunny heals from health item
+        else if (obj.gameObject.tag == "health")
         {
             Heal(1);
         }
@@ -99,14 +101,14 @@ public class BunnyController : MonoBehaviour
     {
         if (currentHealth < maxHealth)
         {
-            currentHealth += h;
+            PlayerPrefs.SetInt("bunnyHealth", currentHealth + h);
         }
     }
 
     void TakeDamage(int dmg)
     {
-        currentHealth -= dmg;
-        if (currentHealth <= 0)
+        PlayerPrefs.SetInt("bunnyHealth", currentHealth - dmg);
+        if (PlayerPrefs.GetInt("bunnyHealth") <= 0)
         {
             SceneManager.LoadScene("GameOver");
         }

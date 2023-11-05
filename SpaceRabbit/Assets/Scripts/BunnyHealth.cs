@@ -22,7 +22,7 @@ public class BunnyHealth : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        healthCounter.text = bunnyController.currentHealth.ToString();
+        healthCounter.text = PlayerPrefs.GetInt("bunnyHealth").ToString();// bunnyController.currentHealth.ToString();
     }
 
 }
