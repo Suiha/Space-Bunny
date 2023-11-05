@@ -83,6 +83,9 @@ public class BunnyController : MonoBehaviour
         } else if (obj.gameObject.tag == "enemy")
         {
             TakeDamage(1);
+        } else if (obj.gameObject.tag == "health")
+        {
+            Heal(1);
         }
     }
 
@@ -90,6 +93,14 @@ public class BunnyController : MonoBehaviour
     {
         // no collision = rabbit in air
         bGrounded = false;
+    }
+
+    void Heal(int h)
+    {
+        if (currentHealth < maxHealth)
+        {
+            currentHealth += h;
+        }
     }
 
     void TakeDamage(int dmg)
