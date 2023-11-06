@@ -45,8 +45,7 @@ public class HawkController : MonoBehaviour
         // bunny takes damage when it hits a hawk
         else if (obj.CompareTag("player"))
         {
-            int health = PlayerPrefs.GetInt("bunnyHealth");
-            PlayerPrefs.SetInt("bunnyHealth", health - dmg);
+            PlayerPrefs.SetInt("bunnyHealth", PlayerPrefs.GetInt("bunnyHealth") - dmg);
         }
     }
 }
