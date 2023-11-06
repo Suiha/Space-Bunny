@@ -13,11 +13,7 @@ public class BunnyController : MonoBehaviour
     private int currentHealth;
     public float jumpPower, speed;
 
-    private Vector2 screenBounds;
-    private float objectWidth;
-
     // grounded check
-    private GameObject platform;
     private bool bGrounded;
 
     // Start is called before the first frame update
@@ -27,6 +23,7 @@ public class BunnyController : MonoBehaviour
         anim = GetComponent<Animator>();
 
         currentHealth = maxHealth;
+        PlayerPrefs.SetInt("bunnyMaxHealth", maxHealth);
         PlayerPrefs.SetInt("bunnyHealth", currentHealth);
     }
 
@@ -77,11 +74,11 @@ public class BunnyController : MonoBehaviour
         // bunny can only jump if in contact with a platform
         if (obj.gameObject.tag == "platform")
         {
-            platform = obj.gameObject;
-            float platWidth = platform.GetComponent<SpriteRenderer>().bounds.size.x / 2;
-            float platHeight = platform.GetComponent<SpriteRenderer>().bounds.size.y / 2;
+            float platWidth = obj.gameObject.GetComponent<SpriteRenderer>().bounds.size.x / 2;
+            float platHeight = obj.gameObject.GetComponent<SpriteRenderer>().bounds.size.y / 2;
             // check if bunny is above platform and not on the sides
-            if (bunny.position.y > platform.transform.position.y + platHeight && (bunny.position.x > platform.transform.position.x - platWidth && bunny.position.x < platform.transform.position.x + platWidth))
+            if (bunny.position.y > obj.gameObject.transform.position.y + platHeight && 
+                (bunny.position.x > obj.gameObject.transform.position.x - platWidth && bunny.position.x < obj.gameObject.transform.position.x + platWidth))
             {
                 bGrounded = true;
                 anim.SetBool("jumping", false);

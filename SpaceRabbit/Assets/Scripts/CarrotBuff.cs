@@ -4,9 +4,22 @@ using UnityEngine;
 
 public class CarrotBuff : MonoBehaviour
 {
+    private Vector3 startPos;
     public int buffEffect = 20;
 
-    private void OnTriggerEnter2D(Collider2D obj)
+    void Start()
+    {
+        startPos = transform.position;
+    }
+
+    // hovering effect
+    void Update()
+    {
+        // sin (time * frequency) * amplitude + y position
+        transform.position = new Vector3(startPos.x, Mathf.Sin(Time.time * 2) * 0.1f + startPos.y, startPos.z);
+    }
+
+    void OnTriggerEnter2D(Collider2D obj)
     {
         if (obj.CompareTag("player"))
         {

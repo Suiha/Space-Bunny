@@ -4,15 +4,30 @@ using UnityEngine;
 
 public class HealthBuff : MonoBehaviour
 {
+    private Vector3 startPos;
     public int heal = 1;
 
-    private void OnTriggerEnter2D(Collider2D obj)
+    void Start()
+    {
+        startPos = transform.position;
+    }
+
+    // hovering effect
+    void Update()
+    {
+        // sin (time * frequency) * amplitude + y position
+        transform.position = new Vector3(startPos.x, Mathf.Sin(Time.time * 2) * 0.1f + startPos.y, startPos.z);
+    }
+
+    void OnTriggerEnter2D(Collider2D obj)
     {
         if (obj.CompareTag("player"))
         {
-            // update player prefs
-            int health = PlayerPrefs.GetInt("bunnyHealth");
-            PlayerPrefs.SetInt("bunnyHealth", health + heal);
+            // update player prefs - cannot heal above max health
+            if (PlayerPrefs.GetInt("bunnyHealth") < PlayerPrefs.GetInt("bunnyMaxHealth"))
+            {
+                PlayerPrefs.SetInt("bunnyHealth", PlayerPrefs.GetInt("bunnyHealth") + heal);
+            }
 
             // heart disappears when player "collects" it
             Destroy(this.gameObject);
