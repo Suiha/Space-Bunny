@@ -4,12 +4,18 @@ using UnityEngine;
 
 public class CarrotBuff : MonoBehaviour
 {
-    public GameObject carrot;
+    private GameObject carrot;
+    private Renderer carrotRenderer;
+    private Collider2D carrotCollider;
     private Vector3 startPos;
     public int buffEffect = 20;
 
     void Start()
     {
+        carrot = this.gameObject;
+        carrotRenderer = carrot.GetComponent<SpriteRenderer>();
+        carrotCollider = carrot.GetComponent<CapsuleCollider2D>();
+
         startPos = transform.position;
     }
 
@@ -29,9 +35,21 @@ public class CarrotBuff : MonoBehaviour
             // add buff effect here
             PlayerPrefs.SetInt("carrotBuff", buffEffect);
 
-            // carrot disappears when player "collects" it & respawns after a short duration
-            CarrotSpawner.RespawnCarrot(this);
+            // carrot disappears when player "collects" it
+            carrotRenderer.enabled = false;
+            carrotCollider.enabled = false;
+
+            // respawns after a short duration
+            StartCoroutine(Respawn());
         }
     }
 
+    IEnumerator Respawn()
+    {
+        // wait for 4 seconds
+        yield return new WaitForSeconds(4);
+
+        carrotRenderer.enabled = true;
+        carrotCollider.enabled = true;
+    }
 }

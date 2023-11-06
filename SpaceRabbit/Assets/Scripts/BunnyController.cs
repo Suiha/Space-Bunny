@@ -25,6 +25,8 @@ public class BunnyController : MonoBehaviour
         currentHealth = maxHealth;
         PlayerPrefs.SetInt("bunnyMaxHealth", maxHealth);
         PlayerPrefs.SetInt("bunnyHealth", currentHealth);
+
+        PlayerPrefs.SetInt("carrotBuff", 0);
     }
 
 
@@ -84,11 +86,6 @@ public class BunnyController : MonoBehaviour
                 bGrounded = true;
                 anim.SetBool("jumping", false);
             }
-        }
-        // bunny takes damage from enemies
-        else if (obj.gameObject.tag == "enemy")
-        {
-            TakeDamage(1);
         }
     }
 
