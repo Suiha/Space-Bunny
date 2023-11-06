@@ -16,7 +16,6 @@ public class CameraController : MonoBehaviour
     void Start()
     {
         lastTargetPosition = target.position;
-        //offsetZ = (transform.position - target.position).z;
         transform.parent = null;
     }
 

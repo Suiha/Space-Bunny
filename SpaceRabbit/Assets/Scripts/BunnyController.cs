@@ -42,6 +42,7 @@ public class BunnyController : MonoBehaviour
             {
                 bunny.velocity = new Vector2(bunny.velocity.x, jumpPower);
             }
+            GetComponent<AudioSource>().Play();
             anim.SetBool("jumping", true);
         }
         if (Input.GetKey("a") || Input.GetKey(KeyCode.LeftArrow))

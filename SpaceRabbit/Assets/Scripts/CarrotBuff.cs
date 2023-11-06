@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CarrotBuff : MonoBehaviour
 {
+    public GameObject carrot;
     private Vector3 startPos;
     public int buffEffect = 20;
 
@@ -17,6 +18,8 @@ public class CarrotBuff : MonoBehaviour
     {
         // sin (time * frequency) * amplitude + y position
         transform.position = new Vector3(startPos.x, Mathf.Sin(Time.time * 2) * 0.1f + startPos.y, startPos.z);
+
+
     }
 
     void OnTriggerEnter2D(Collider2D obj)
@@ -26,8 +29,8 @@ public class CarrotBuff : MonoBehaviour
             // add buff effect here
             PlayerPrefs.SetInt("carrotBuff", buffEffect);
 
-            // carrot disappears when player "collects" it
-            Destroy(this.gameObject);
+            // carrot disappears when player "collects" it & respawns after a short duration
+            CarrotSpawner.RespawnCarrot(this);
         }
     }
 
