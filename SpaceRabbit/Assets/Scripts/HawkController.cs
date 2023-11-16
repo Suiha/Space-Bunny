@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class HawkController : MonoBehaviour
 {
@@ -45,7 +46,12 @@ public class HawkController : MonoBehaviour
         // bunny takes damage when it hits a hawk
         else if (obj.CompareTag("player"))
         {
+            GetComponent<AudioSource>().Play();
             PlayerPrefs.SetInt("bunnyHealth", PlayerPrefs.GetInt("bunnyHealth") - dmg);
+            if (PlayerPrefs.GetInt("bunnyHealth") <= 0)
+            {
+                SceneManager.LoadScene("GameOver");
+            }
         }
     }
 }

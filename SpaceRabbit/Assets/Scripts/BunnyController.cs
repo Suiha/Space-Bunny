@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class BunnyController : MonoBehaviour
 {
@@ -93,15 +92,5 @@ public class BunnyController : MonoBehaviour
     {
         // no collision = rabbit in air
         bGrounded = false;
-    }
-
-    void TakeDamage(int dmg)
-    {
-        currentHealth = PlayerPrefs.GetInt("bunnyHealth");
-        PlayerPrefs.SetInt("bunnyHealth", currentHealth - dmg);
-        if (PlayerPrefs.GetInt("bunnyHealth") <= 0)
-        {
-            SceneManager.LoadScene("GameOver");
-        }
     }
 }
