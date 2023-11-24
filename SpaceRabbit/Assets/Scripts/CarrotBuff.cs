@@ -33,6 +33,7 @@ public class CarrotBuff : MonoBehaviour
         if (obj.CompareTag("player"))
         {
             // add buff effect here
+            PlayerPrefs.SetInt("bunnyBuff", 1);
             PlayerPrefs.SetInt("carrotBuff", buffEffect);
 
             // carrot disappears when player "collects" it

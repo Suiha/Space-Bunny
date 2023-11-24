@@ -47,6 +47,7 @@ public class HawkController : MonoBehaviour
         else if (obj.CompareTag("player"))
         {
             GetComponent<AudioSource>().Play();
+            PlayerPrefs.SetInt("bunnyHit", 1); // indicator for bunny flash effect
             PlayerPrefs.SetInt("bunnyHealth", PlayerPrefs.GetInt("bunnyHealth") - dmg);
             if (PlayerPrefs.GetInt("bunnyHealth") <= 0)
             {

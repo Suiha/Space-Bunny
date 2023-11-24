@@ -13499,6 +13499,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b3e3eb5cf163c34f8dd77b33aae5c9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flashMaterial: {fileID: 2100000, guid: 11d6685f9ad2a62458b5e1603fea8702, type: 2}
+  healMaterial: {fileID: 2100000, guid: 5c7c9fc36f003da4c9c9b269959f15aa, type: 2}
+  buffMaterial: {fileID: 2100000, guid: ba8e01de2aa026f418f4892b588a8143, type: 2}
   maxHealth: 10
   jumpPower: 12
   speed: 3

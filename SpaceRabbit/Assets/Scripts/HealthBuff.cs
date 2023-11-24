@@ -23,6 +23,7 @@ public class HealthBuff : MonoBehaviour
     {
         if (obj.CompareTag("player"))
         {
+            PlayerPrefs.SetInt("bunnyHeal", 1);
             // update player prefs - cannot heal above max health
             if (PlayerPrefs.GetInt("bunnyHealth") < PlayerPrefs.GetInt("bunnyMaxHealth"))
             {
