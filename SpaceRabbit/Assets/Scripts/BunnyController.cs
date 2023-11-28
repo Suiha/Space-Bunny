@@ -32,6 +32,7 @@ public class BunnyController : MonoBehaviour
         PlayerPrefs.SetInt("bunnyMaxHealth", maxHealth);
         PlayerPrefs.SetInt("bunnyHealth", maxHealth);
 
+        PlayerPrefs.SetFloat("gravity", 1.8f);
         PlayerPrefs.SetInt("carrotBuff", 0);
     }
 
@@ -68,6 +69,9 @@ public class BunnyController : MonoBehaviour
         {
             anim.SetBool("moving", false);
         }
+
+        // update gravity depending on location
+        bunny.gravityScale = PlayerPrefs.GetFloat("gravity");
     }
 
     // Update is called once per frame
