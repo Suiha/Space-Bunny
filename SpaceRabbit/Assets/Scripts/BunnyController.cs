@@ -73,12 +73,6 @@ public class BunnyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // no x movement, stop moving animation
-        if (bunny.velocity.x == 0)
-        {
-            anim.SetBool("moving", false);
-        }
-
         // effects and precedence
         // check for buff effect
         if (PlayerPrefs.GetInt("bunnyBuff") == 1)
