@@ -10,13 +10,13 @@ public class BunnyController : MonoBehaviour
 
     // materials
     Material bunnyMaterial;
+    [SerializeField] Material flashMaterial;
     [SerializeField] Material healMaterial;
     [SerializeField] Material buffMaterial;
 
     // bunny traits
     public int maxHealth = 10;
     public float jumpPower, speed;
-    private float jump;
 
     // grounded check
     private bool bGrounded;
@@ -31,7 +31,6 @@ public class BunnyController : MonoBehaviour
 
         PlayerPrefs.SetInt("bunnyMaxHealth", maxHealth);
         PlayerPrefs.SetInt("bunnyHealth", maxHealth);
-        jump = jumpPower;
 
         PlayerPrefs.SetFloat("gravity", 1.8f);
         PlayerPrefs.SetInt("carrotBuff", 0);
@@ -43,18 +42,15 @@ public class BunnyController : MonoBehaviour
         // movement
         if ((Input.GetKey("w") || Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.UpArrow)) && bGrounded)
         {
-
-            if (PlayerPrefs.GetInt("carrotBuff") == 0)
+            // carrot buff increases jump power
+            if (PlayerPrefs.GetInt("carrotBuff") != 0)
             {
-                jump = jumpPower;
-            }
-            else
-            {
-                jump = jumpPower * PlayerPrefs.GetInt("carrotBuff");
+                bunny.velocity = new Vector2(bunny.velocity.x, jumpPower * PlayerPrefs.GetInt("carrotBuff"));
                 PlayerPrefs.SetInt("carrotBuff", 0);
-
+            } else
+            {
+                bunny.velocity = new Vector2(bunny.velocity.x, jumpPower);
             }
-            bunny.velocity = new Vector2(bunny.velocity.x, jump);
             GetComponent<AudioSource>().Play();
             anim.SetBool("jumping", true);
         }
@@ -69,8 +65,7 @@ public class BunnyController : MonoBehaviour
             transform.localScale = new Vector3(1, 1, 1);
             bunny.velocity = new Vector2(speed, bunny.velocity.y);
             if (bGrounded) anim.SetBool("moving", true);
-        }
-        else
+        } else
         {
             anim.SetBool("moving", false);
         }
@@ -82,22 +77,16 @@ public class BunnyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-    }
-
-    void LateUpdate()
-    {
-        // hurt animation check
-        if (PlayerPrefs.GetInt("bunnyHit") == 1)
-        {
-            anim.SetBool("damaged", true);
-            StartCoroutine(HitEffect());
-        }
-
+        // effects and precedence
         // check for buff effect
         if (PlayerPrefs.GetInt("bunnyBuff") == 1)
         {
             StartCoroutine(BuffEffect());
+        }
+        // check for flash effect
+        else if (PlayerPrefs.GetInt("bunnyHit") == 1)
+        {
+            StartCoroutine(FlashEffect());
         }
         // check for heal effect
         else if (PlayerPrefs.GetInt("bunnyHeal") == 1)
@@ -124,20 +113,10 @@ public class BunnyController : MonoBehaviour
         }
     }
 
-    // no collision = rabbit not grounded
     void OnCollisionExit2D(Collision2D obj)
     {
+        // no collision = rabbit in air
         bGrounded = false;
-    }
-
-    private IEnumerator HitEffect()
-    {
-        // hit animation plays for a bit
-        yield return new WaitForSeconds(0.5f);
-
-        // stop animation
-        anim.SetBool("damaged", false);
-        PlayerPrefs.SetInt("bunnyHit", 0);
     }
 
     private IEnumerator BuffEffect()
@@ -146,7 +125,7 @@ public class BunnyController : MonoBehaviour
         spriteRenderer.material = buffMaterial;
 
         // wait before executing next part of function
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.15f);
 
         // swap to original material
         spriteRenderer.material = bunnyMaterial;
@@ -155,13 +134,28 @@ public class BunnyController : MonoBehaviour
         PlayerPrefs.SetInt("bunnyBuff", 0);
     }
 
+    private IEnumerator FlashEffect()
+    {
+        // swap to flash effect
+        spriteRenderer.material = flashMaterial;
+
+        // wait before executing next part of function
+        yield return new WaitForSeconds(0.15f);
+
+        // swap to original material
+        spriteRenderer.material = bunnyMaterial;
+
+        // stop routine
+        PlayerPrefs.SetInt("bunnyHit", 0);
+    }
+
     private IEnumerator HealEffect()
     {
         // swap to heal effect
         spriteRenderer.material = healMaterial;
 
         // wait before executing next part of function
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.15f);
 
         // swap to original material
         spriteRenderer.material = bunnyMaterial;
