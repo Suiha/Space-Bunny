@@ -43,7 +43,6 @@ public class BunnyController : MonoBehaviour
         // movement
         if ((Input.GetKey("w") || Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.UpArrow)) && bGrounded)
         {
-
             if (PlayerPrefs.GetInt("carrotBuff") == 0)
             {
                 jump = jumpPower;
@@ -112,7 +111,7 @@ public class BunnyController : MonoBehaviour
         // bunny can only jump if in contact with a platform
         if (obj.gameObject.tag == "platform")
         {
-            float platWidth = obj.gameObject.GetComponent<SpriteRenderer>().bounds.size.x / 2;
+            float platWidth = (obj.gameObject.GetComponent<SpriteRenderer>().bounds.size.x / 2) * obj.gameObject.transform.localScale.x;
             float platHeight = obj.gameObject.GetComponent<SpriteRenderer>().bounds.size.y / 2;
             // check if bunny is above platform and not on the sides
             if (bunny.position.y > obj.gameObject.transform.position.y + platHeight && 

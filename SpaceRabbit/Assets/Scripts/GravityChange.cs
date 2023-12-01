@@ -4,18 +4,19 @@ using UnityEngine;
 
 public class GravityChange : MonoBehaviour
 {
+    public float initialGravity, newGravity;
     void Start() { }
 
     void OnTriggerEnter2D(Collider2D obj)
     {
         // switch between earth and space gravity
         if (obj.CompareTag("player")) {
-            if (PlayerPrefs.GetFloat("gravity") == 1.8f)
+            if (PlayerPrefs.GetFloat("gravity") == newGravity)
             {
-                PlayerPrefs.SetFloat("gravity", 1.0f);
+                PlayerPrefs.SetFloat("gravity", initialGravity);
             } else
             {
-                PlayerPrefs.SetFloat("gravity", 1.8f);
+                PlayerPrefs.SetFloat("gravity", newGravity);
             }
             
         }
